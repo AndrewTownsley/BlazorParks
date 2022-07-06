@@ -1,14 +1,21 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>ParkTracker_Server</PageTitle>
+<PageTitle>All Parks</PageTitle>
 
 <div class="page">
-    <div class="sidebar">
+    <div class="sidebar" 
+         style=" background: rgb(42,80,42) !important;
+                background: linear-gradient(0deg, rgba(42,80,42,1) 20%, rgba(34,34,34,1) 75%)!important;"
+     
+    >
         <NavMenu />
     </div>
 
     <main>
-        <div class="bg-light px-4 text-end">
+        <div class="bg-light px-4 d-flex justify-content-between align-items-center">
+            <a href="addpark" class="btn btn-success" style="height: 40px;">
+                Add Park
+            </a>
             <h1 class="text-success h2 py-2" style="font-weight: bold;">All Parks</h1>
         </div>
 
@@ -17,3 +24,9 @@
         </article>
     </main>
 </div>
+
+@code
+{
+        @*    style="background: rgb(9,141,80) !important;
+                background: linear-gradient(0deg, rgba(9,141,80,1) 38%, rgba(40,92,166,1) 79%, rgba(74,14,154,1) 100%) !important;"*@
+}

@@ -1,0 +1,17 @@
+﻿@using ParkTracker_Server.Models
+
+<article class="card bg-light col-6 p-4 mb-4">
+    <h4 class="text-success"><a href="#" class="text-success">@Park.Name</a></h4>
+    <h5 class="text-secondary">Location: @Park.State</h5>
+    <p>@Park.Description</p>
+    <p class="text-secondary">@Park.Activities</p>
+    <div class="d-flex justify-content-between align-items-end">
+        <p class="mb-0">Fee: <span style="font-weight: bold; color: #444;">@(Park.Fee ? "Yes" : "No")</span></p>
+        <a href="#" class="btn btn-success">View Park</a>
+    </div>
+</article>
+@code {
+
+    [Parameter]
+    public Park Park { get; set; }
+}

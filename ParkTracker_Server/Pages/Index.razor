@@ -6,24 +6,16 @@
 
 <h3 class="text-success bg-light p-3 mb-2">Find National, State, and Local Parks.</h3>
 
-<SurveyPrompt Title="What Parks do you want to see?" />
-
 @foreach (var park in _parksList)
 {
-    <article class="card bg-light col-6 p-4 mb-4">
-        <h4 class="text-success"><a href="#" class="text-success">@park.Name</a></h4>
-        <h5 class="text-secondary">Location: @park.State</h5>
-        <p>@park.Description</p>
-        <p class="text-secondary">@park.Activities</p>
-        <div class="d-flex justify-content-between">
-            <p>Fee: @park.Fee</p>
-            <a href="#" class="btn btn-success">View Park</a>
-        </div>
-    </article>
+    <ParkCard Park="park" />
 }
 
 @code
 {
+    [Parameter]
+    public Park Park { get; set; }
+
      List<Park> _parksList = new List<Park>();
 
     protected override void OnInitialized()

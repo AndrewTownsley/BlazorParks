@@ -1,0 +1,80 @@
+﻿@page "/"
+@using ParkTracker_Server.Models
+
+
+<PageTitle>Index</PageTitle>
+
+<h3 class="text-success bg-light p-3 mb-2">Find National, State, and Local Parks.</h3>
+
+<SurveyPrompt Title="What Parks do you want to see?" />
+
+@foreach (var park in _parksList)
+{
+    <article class="card bg-light col-6 p-4 mb-4">
+        <h4 class="text-success"><a href="#" class="text-success">@park.Name</a></h4>
+        <h5 class="text-secondary">Location: @park.State</h5>
+        <p>@park.Description</p>
+        <p class="text-secondary">@park.Activities</p>
+        <div class="d-flex justify-content-between">
+            <p>Fee: @park.Fee</p>
+            <a href="#" class="btn btn-success">View Park</a>
+        </div>
+    </article>
+}
+
+@code
+{
+     List<Park> _parksList = new List<Park>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        _parksList.Add(new Park()
+        {
+            Id = 11,
+            Name = "Rocky Mountain National Park",
+            State = "Colorado",
+            Description = "National Park in the Rocky Mountains of Colorado.  Lots of Hiking trails, and a road that takes travelers above the treeline.",
+            Activities = "Hiking, Wildlife, Rock Climbing, Photography, Camping",
+            Fee = true,
+        });
+        _parksList.Add(new Park()
+        {
+            Id = 22,
+            Name = "Mount St. Helens State Park",
+            State = "Washington",
+            Description = "Volcanic Mountain Park in Washington State.  Last Eruption was 1980.  See the aftermath of the Volcanic explosion, and the regrowth of the forest that was destroyed.",
+            Activities = "Hiking, Wildlife, Rock Climbing, Photography, Camping, Geology",
+            Fee = true,
+        });
+        _parksList.Add(new Park()
+        {
+            Id = 33,
+            Name = "Glen Onoko State Park",
+            State = "Pennsylvania",
+            Description = "State Park in the Lehigh Gorge of Pennsylvania.  Hike along a cascading waterfall, and see the views of the Gorge at the top.",
+            Activities = "Hiking, Wildlife, Waterfalls, Photography, Camping, History",
+            Fee = false,
+        });
+        _parksList.Add(new Park()
+        {
+            Id = 44,
+            Name = "Redwood State Forest",
+            State = "California",
+            Description = "Old Growth Forest on the Central Coast of California.  See it before it turns to ash.",
+            Activities = "Hiking, Wildlife, Biology, Botany, Photography, Camping",
+            Fee = true,
+        });
+        _parksList.Add(new Park()
+        {
+            Id = 55,
+            Name = "Havasu Falls",
+            State = "Arizona",
+            Description = "Desert Oasis on Tribal Land.  Turquoise waters flow through red rock canyons",
+            Activities = "Hiking, Swimming, Photography",
+            Fee = true,
+        });
+    }
+
+}

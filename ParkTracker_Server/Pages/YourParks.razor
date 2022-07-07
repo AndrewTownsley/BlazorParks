@@ -1,17 +1,49 @@
 ﻿@page "/yourparks"
 @using ParkTracker_Server.Models
-<h3 class="text-success bg-light p-3 mb-5" >Your Parks</h3>
+<div class="bg-light mb-5">
+    <h3 class="text-success p-3" >Your Parks</h3>
+    <span>Favorites: @favoritesAlert</span>
+    <span>You have @(favoritesCount) Parks in your favorites.</span>
+</div>
 
 <p>@SelectedActivity</p>
 @foreach (var park in _parksList)
 {
-    <ParkCard Park="park" />
+    <ParkCard 
+        Park="park"
+        OnFavoriteClick="AddFavoritesAlert"
+        OnFavoriteSelection="FavoriteCounterChange"
+    />
 }
 
 @code {
 
+
+    private int favoritesCount { get; set; }
+    private string favoritesAlert = "";
     public string SelectedActivity { get; set; }
     List<Park> _parksList = new List<Park>();
+
+
+    protected async Task AddFavoritesAlert(MouseEventArgs e)
+    {
+        favoritesAlert= "Park added to Favorites List!";
+        await Task.Delay(5000);
+    }
+
+    protected void FavoriteCounterChange(bool isFavoriteSelected)
+    {
+        if (isFavoriteSelected)
+        {
+            favoritesCount++;
+        }
+        else
+        {
+            favoritesCount--;
+        }
+    }
+
+
 
     protected override void OnInitialized()
     {

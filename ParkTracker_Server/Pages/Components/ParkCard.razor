@@ -2,7 +2,13 @@
 
 <article class="card bg-light col-6 p-4 mb-4">
     <div class="d-flex justify-content-between">
-        <h4 class="text-success"><a href="#" class="text-success">@Park.Name</a></h4>
+        <h4 class="text-success">
+            <a 
+                href="/parkdetail"
+                class="text-success">
+                @Park.Name
+            </a>
+        </h4>
         <span class="oi oi-heart text-success park-like" @onclick="OnFavoriteClick" @onchange="FavoriteSelectionChange"></span>
     </div>
     <h5 class="text-secondary">Location: @Park.State</h5>
@@ -14,6 +20,12 @@
     </div>
 </article>
 @code {
+
+    //[Parameter]
+    //public string ParkNameParam { get; set; }
+
+    //[Parameter]
+    //public string ParkIdParam { get; set; }
 
     [Parameter]
     public Park Park { get; set; }

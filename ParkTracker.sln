@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkTracker_Server", "ParkTracker_Server\ParkTracker_Server.csproj", "{F948D561-68AC-4468-850A-B2D336B61A10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkTracker_Server", "ParkTracker_Server\ParkTracker_Server.csproj", "{F948D561-68AC-4468-850A-B2D336B61A10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{24E0C611-0FD9-452F-9619-632743E327FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{F0733968-0BD1-4274-919F-0A9A6FA77017}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{6DF39B7E-3FF1-46CE-8966-ABD8F2A70008}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{9A94E762-F943-4EB9-9169-968DA0081FB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{F948D561-68AC-4468-850A-B2D336B61A10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F948D561-68AC-4468-850A-B2D336B61A10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F948D561-68AC-4468-850A-B2D336B61A10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24E0C611-0FD9-452F-9619-632743E327FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24E0C611-0FD9-452F-9619-632743E327FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24E0C611-0FD9-452F-9619-632743E327FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24E0C611-0FD9-452F-9619-632743E327FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0733968-0BD1-4274-919F-0A9A6FA77017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0733968-0BD1-4274-919F-0A9A6FA77017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0733968-0BD1-4274-919F-0A9A6FA77017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0733968-0BD1-4274-919F-0A9A6FA77017}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DF39B7E-3FF1-46CE-8966-ABD8F2A70008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DF39B7E-3FF1-46CE-8966-ABD8F2A70008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DF39B7E-3FF1-46CE-8966-ABD8F2A70008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DF39B7E-3FF1-46CE-8966-ABD8F2A70008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A94E762-F943-4EB9-9169-968DA0081FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A94E762-F943-4EB9-9169-968DA0081FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A94E762-F943-4EB9-9169-968DA0081FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A94E762-F943-4EB9-9169-968DA0081FB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

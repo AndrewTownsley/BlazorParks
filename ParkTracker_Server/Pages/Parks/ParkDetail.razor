@@ -1,0 +1,36 @@
+﻿@page "/parkdetail"
+@*@page "/parkdetail{parknameparam}"
+@page "/parkdetail{parkidparam}"
+@*@using System.Runtime.CompilerServices
+@inject NavigationManager NavigationManager
+
+<h3>ParkDetail</h3>
+
+<a href="/yourparks" class="btn btn-outline-success">Back to Your parks</a>
+
+<div class="bg-light p-4">
+    @*<h4 class="text-success">ParkNameParam: @ParkNameParam</h4>*@
+    @*<h4>ParkNameParam: @ParkNameParam</h4>*@
+</div>
+
+@*<button class="btn btn-outline-success" @onclick="BackToRouting"> Load Params</button>*@
+
+
+@code {
+
+    //private string ParkNameParam;
+    //private string ParkIdParam;
+
+    //private void LoadParams()
+    //{
+    //    var absoluteUri = new Uri(NavigationManager.Uri);
+    //    var queryParam = System.Web.HttpUtility.ParseQueryString(absoluteUri.Query);
+    //    ParkNameParam = queryParam["ParkNameParam"];
+    //    ParkIdParam = queryParam["ParkIdParam"];
+    //}
+
+    //private void BackToRouting()
+    //{
+    //    NavigationManager.NavigateTo("/yourparks");
+    //}
+}

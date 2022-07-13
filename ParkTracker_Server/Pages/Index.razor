@@ -1,72 +1,125 @@
 ﻿@page "/"
-@using ParkTracker_Server.Models
+@using Models
+@using Business.Repository.IRepository
+@using global::Models
+@inject IParkRepository ParkRepository
 
 
 <PageTitle>Index</PageTitle>
 
 <h3 class="text-success bg-light p-3 mb-2">Find National, State, and Local Parks.</h3>
 
-@foreach (var park in _parksList)
+@if (Parks.Any())
 {
-    <ParkCard Park="park" />
+@foreach (var park in Parks)
+        {
+            // <ParkCard Park="@park"/>
+            
+            <article class="card bg-light col-6 p-4 mb-4">
+                <div class="d-flex justify-content-between">
+                    <h4 class="text-success">
+                        <a 
+                            href="/parkdetail"
+                            class="text-success">
+                            @park.Name
+                        </a>
+                    </h4>
+                    <span class="oi oi-heart text-success park-like" @onclick="OnFavoriteClick" @onchange="FavoriteSelectionChange"></span>
+                </div>
+                <h5 class="text-secondary">Location: @park.State</h5>
+                <p>@park.Description</p>
+                <div class="d-flex justify-content-between align-items-end">
+                    <p class="mb-0">Fee: <span style="font-weight: bold; color: #444;">@(park.Fee ? "Yes" : "No")</span></p>
+                    <a href="#" class="btn btn-success">View Park</a>
+                </div>
+            </article>
+        }
 }
+else
+{
+    <div class="bg-warning">
+        <h3 class="text-success">No Parks Found!</h3>
+    </div>
+}
+
 
 @code
 {
+
     [Parameter]
-    public Park Park { get; set; }
+    public ParkDto Park { get; set; }
 
-     List<Park> _parksList = new List<Park>();
+    private IEnumerable<ParkDto> Parks { get; set; } = new List<ParkDto>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
-
-        _parksList.Add(new Park()
-        {
-            Id = 11,
-            Name = "Rocky Mountain National Park",
-            State = "Colorado",
-            Description = "National Park in the Rocky Mountains of Colorado.  Lots of Hiking trails, and a road that takes travelers above the treeline.",
-            Activities = "Hiking, Wildlife, Rock Climbing, Photography, Camping",
-            Fee = true,
-        });
-        _parksList.Add(new Park()
-        {
-            Id = 22,
-            Name = "Mount St. Helens State Park",
-            State = "Washington",
-            Description = "Volcanic Mountain Park in Washington State.  Last Eruption was 1980.  See the aftermath of the Volcanic explosion, and the regrowth of the forest that was destroyed.",
-            Activities = "Hiking, Wildlife, Rock Climbing, Photography, Camping, Geology",
-            Fee = true,
-        });
-        _parksList.Add(new Park()
-        {
-            Id = 33,
-            Name = "Glen Onoko State Park",
-            State = "Pennsylvania",
-            Description = "State Park in the Lehigh Gorge of Pennsylvania.  Hike along a cascading waterfall, and see the views of the Gorge at the top.",
-            Activities = "Hiking, Wildlife, Waterfalls, Photography, Camping, History",
-            Fee = false,
-        });
-        _parksList.Add(new Park()
-        {
-            Id = 44,
-            Name = "Redwood State Forest",
-            State = "California",
-            Description = "Old Growth Forest on the Central Coast of California.  See it before it turns to ash.",
-            Activities = "Hiking, Wildlife, Biology, Botany, Photography, Camping",
-            Fee = true,
-        });
-        _parksList.Add(new Park()
-        {
-            Id = 55,
-            Name = "Havasu Falls",
-            State = "Arizona",
-            Description = "Desert Oasis on Tribal Land.  Turquoise waters flow through red rock canyons",
-            Activities = "Hiking, Swimming, Photography",
-            Fee = true,
-        });
+        Parks = await ParkRepository.GetAllParks();
     }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnFavoriteClick { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnFavoriteSelection { get; set; }
+
+    protected async Task FavoriteSelectionChange(ChangeEventArgs e)
+    {
+        await OnFavoriteSelection.InvokeAsync();
+    }
+    //[Parameter]
+    //public UserPark Park { get; set; }
+
+    // List<UserPark> _parksList = new List<UserPark>();
+
+    //protected override void OnInitialized()
+    //{
+    //    base.OnInitialized();
+
+    //    _parksList.Add(new UserPark()
+    //    {
+    //        Id = 11,
+    //        Name = "Rocky Mountain National Park",
+    //        State = "Colorado",
+    //        Description = "National Park in the Rocky Mountains of Colorado.  Lots of Hiking trails, and a road that takes travelers above the treeline.",
+    //        Activities = "Hiking, Wildlife, Rock Climbing, Photography, Camping",
+    //        Fee = true,
+    //    });
+    //    _parksList.Add(new UserPark()
+    //    {
+    //        Id = 22,
+    //        Name = "Mount St. Helens State Park",
+    //        State = "Washington",
+    //        Description = "Volcanic Mountain Park in Washington State.  Last Eruption was 1980.  See the aftermath of the Volcanic explosion, and the regrowth of the forest that was destroyed.",
+    //        Activities = "Hiking, Wildlife, Rock Climbing, Photography, Camping, Geology",
+    //        Fee = true,
+    //    });
+    //    _parksList.Add(new UserPark()
+    //    {
+    //        Id = 33,
+    //        Name = "Glen Onoko State Park",
+    //        State = "Pennsylvania",
+    //        Description = "State Park in the Lehigh Gorge of Pennsylvania.  Hike along a cascading waterfall, and see the views of the Gorge at the top.",
+    //        Activities = "Hiking, Wildlife, Waterfalls, Photography, Camping, History",
+    //        Fee = false,
+    //    });
+    //    _parksList.Add(new UserPark()
+    //    {
+    //        Id = 44,
+    //        Name = "Redwood State Forest",
+    //        State = "California",
+    //        Description = "Old Growth Forest on the Central Coast of California.  See it before it turns to ash.",
+    //        Activities = "Hiking, Wildlife, Biology, Botany, Photography, Camping",
+    //        Fee = true,
+    //    });
+    //    _parksList.Add(new UserPark()
+    //    {
+    //        Id = 55,
+    //        Name = "Havasu Falls",
+    //        State = "Arizona",
+    //        Description = "Desert Oasis on Tribal Land.  Turquoise waters flow through red rock canyons",
+    //        Activities = "Hiking, Swimming, Photography",
+    //        Fee = true,
+    //    });
+    //}
 
 }

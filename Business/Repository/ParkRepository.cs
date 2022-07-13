@@ -14,8 +14,8 @@ namespace Business.Repository
 
         public ParkRepository(ApplicationDbContext db, IMapper mapper)
         {
-            _db = db;
             _mapper = mapper;
+            _db = db;
         }
 
         public async Task<ParkDto> CreatePark(ParkDto parkDto)
@@ -84,9 +84,9 @@ namespace Business.Repository
         {
             try
             {
-                IEnumerable<ParkDto> ParkDtos = _mapper.Map<IEnumerable<Park>, IEnumerable<ParkDto>>(
+                IEnumerable<ParkDto> parkDtos = _mapper.Map<IEnumerable<Park>, IEnumerable<ParkDto>>(
                     _db.Parks);
-                return ParkDtos;
+                return parkDtos;
             }
             catch (Exception ex)
             {

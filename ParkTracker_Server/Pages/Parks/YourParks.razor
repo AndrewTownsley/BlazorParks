@@ -1,4 +1,4 @@
-﻿@page "/yourparks"
+﻿@*@page "/yourparks"
 @using ParkTracker_Server.Models
 
 
@@ -23,7 +23,7 @@
     public string SelectedActivity { get; set; }
     private int favoritesCount { get; set; }
     private string favoritesAlert = "";
-    List<Park> _parksList = new List<Park>();
+    List<UserPark> _parksList = new List<UserPark>();
 
 
     protected async Task AddFavoritesAlert(MouseEventArgs e)
@@ -50,7 +50,7 @@
     {
         base.OnInitialized();
 
-        _parksList.Add(new Park()
+        _parksList.Add(new UserPark()
         {
             Id = 11,
             Name = "Rocky Mountain National Park",
@@ -59,7 +59,7 @@
             Activities = "Hiking, Wildlife, Rock Climbing, Photography, Camping",
             Fee = true,
         });
-        _parksList.Add(new Park()
+        _parksList.Add(new UserPark()
         {
             Id = 22,
             Name = "Mount St. Helens State Park",
@@ -68,7 +68,7 @@
             Activities = "Hiking, Wildlife, Rock Climbing, Photography, Camping, Geology",
             Fee = true,
         });
-        _parksList.Add(new Park()
+        _parksList.Add(new UserPark()
         {
             Id = 33,
             Name = "Glen Onoko State Park",
@@ -77,7 +77,7 @@
             Activities = "Hiking, Wildlife, Waterfalls, Photography, Camping, History",
             Fee = false,
         });
-        _parksList.Add(new Park()
+        _parksList.Add(new UserPark()
         {
             Id = 44,
             Name = "Redwood State Forest",
@@ -86,7 +86,7 @@
             Activities = "Hiking, Wildlife, Biology, Botany, Photography, Camping",
             Fee = true,
         });
-        _parksList.Add(new Park()
+        _parksList.Add(new UserPark()
         {
             Id = 55,
             Name = "Havasu Falls",
@@ -98,3 +98,4 @@
     }
 
 }
+*@

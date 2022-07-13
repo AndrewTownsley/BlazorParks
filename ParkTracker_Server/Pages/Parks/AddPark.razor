@@ -1,21 +1,28 @@
 ﻿@page "/addpark"
-@using ParkTracker_Server.Models
-
+@inject IJSRuntime JsRuntime
+@using Business.Repository.IRepository
+@using global::Models
+@using Models
+@using ParkTracker_Server.Helper
+@inject IParkRepository ParkRepository
+@inject NavigationManager NavigationManager
 
 <section>
     <div>
-        <EditForm class="form-control bg-light px-4 pb-4">
+        <EditForm Model="ParkModel" OnValidSubmit="HandleParkSubmitAdmin" class="form-control bg-light px-4 pb-4">
+            <DataAnnotationsValidator/>
             <h3 class="text-success bg-light py-3">Add a Park</h3>
             <span class="text-danger mb-5">* Required</span>
             <div class="mt-2 mb-3">
                 <label>Name of Park <span class="text-danger">*</span></label>
-                <input type="text"
+                <InputText 
                        class="form-control"
-                       @*@bind-value="@Park.Name"*@/>
+                       @bind-Value="@ParkModel.Name"
+                />
             </div>
             <div class="mb-3">
                 <label>State <span class="text-danger">*</span></label>
-                <select class="form-select" style="max-width: 200px;">
+                <select @bind-value="@ParkModel.State" @bind-value:event="onchange" class="form-select" style="max-width: 200px;">
                     @foreach (var state in States)
                     {
                         <option value="@state">@state</option>
@@ -24,25 +31,17 @@
             </div>
             <div class="mb-3">
                 <label>Description <span class="text-danger">*</span></label>
-                <textarea 
-                    type="text" 
+                <InputTextArea
                     class="form-control"
-                    @*@bind-value="@Park.Description" *@
-                >
-                </textarea>
-            </div>
-            <div class="mb-3">
-                <label>Activities</label>
-                <input type="text"
-                       class="form-control"
-                       @*@bind-value="@Park.Activities"*@/>
+                    @bind-Value="@ParkModel.Description"
+                />
             </div>
             <div class="mb-3">
                 <label>Select if there a Fee <span class="text-danger">*</span></label>
-                <input
-                    type="checkbox"
+                <InputCheckbox
                     class="form-check-input"
-                    @*@bind-value="@Park.Fee"*@/>
+                    @bind-Value="@ParkModel.Fee"
+                />
             </div>
             <button class="btn btn-success">Submit Park</button>
         </EditForm>
@@ -53,6 +52,26 @@
 
 
 @code {
+
+    private async Task ToastSuccess()
+    {
+        await JsRuntime.ToastrSuccess("Success From The ToastSuccess Task");
+    }
+
+    private ParkDto ParkModel { get; set; } = new ParkDto();
+
+    private async Task HandleParkSubmitAdmin()
+    {
+        var parkDetailsByName = await ParkRepository.DuplicateParkNameCheck(ParkModel.Name);
+        if (parkDetailsByName != null)
+        {
+            return;
+        }
+        var createdResult = await ParkRepository.CreatePark(ParkModel);
+        NavigationManager.NavigateTo("/addpark");
+        await ToastSuccess();
+    }
+
 
     string[] States = new[]
     {

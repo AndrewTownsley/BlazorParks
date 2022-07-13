@@ -1,4 +1,9 @@
-﻿@using ParkTracker_Server.Models
+﻿@using Models
+@using Business.Repository.IRepository
+@using DataAccess.Data
+@using global::Models
+@inject IParkRepository ParkRepository
+
 
 <article class="card bg-light col-6 p-4 mb-4">
     <div class="d-flex justify-content-between">
@@ -13,7 +18,6 @@
     </div>
     <h5 class="text-secondary">Location: @Park.State</h5>
     <p>@Park.Description</p>
-    <p class="text-secondary">@Park.Activities</p>
     <div class="d-flex justify-content-between align-items-end">
         <p class="mb-0">Fee: <span style="font-weight: bold; color: #444;">@(Park.Fee ? "Yes" : "No")</span></p>
         <a href="#" class="btn btn-success">View Park</a>
@@ -28,7 +32,7 @@
     //public string ParkIdParam { get; set; }
 
     [Parameter]
-    public Park Park { get; set; }
+    public ParkDto Park { get; set; }
 
     [Parameter]
     public EventCallback<MouseEventArgs> OnFavoriteClick { get; set; }

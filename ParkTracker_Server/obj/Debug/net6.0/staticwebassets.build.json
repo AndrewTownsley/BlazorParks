@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "nh7TjcPzWZ2nRA0+LGZgVFxsPVuwgf9+T5htaKyCav4=",
+  "Hash": "OPoOpknoj8eoXuJOVyv+AEffeWHDcttCLgl9epOV/4M=",
   "Source": "ParkTracker_Server",
   "BasePath": "_content/ParkTracker_Server",
   "Mode": "Default",
@@ -270,6 +270,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\acer\\OneDrive\\C#\\ParkTracker\\ParkTracker_Server\\wwwroot\\js\\common.js",
+      "SourceId": "ParkTracker_Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\acer\\OneDrive\\C#\\ParkTracker\\ParkTracker_Server\\wwwroot\\",
+      "BasePath": "_content/ParkTracker_Server",
+      "RelativePath": "js/common.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\common.js"
     }
   ]
 }

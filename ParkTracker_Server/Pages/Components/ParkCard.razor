@@ -9,7 +9,6 @@
     <div class="d-flex justify-content-between">
         <h4 class="text-success">
             <a 
-                href="/parkdetail"
                 class="text-success">
                 @Park.Name
             </a>
@@ -33,6 +32,13 @@
 
     [Parameter]
     public ParkDto Park { get; set; }
+
+    private IEnumerable<ParkDto> Parks { get; set; } = new List<ParkDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Parks = await ParkRepository.GetAllParks();
+    }
 
     [Parameter]
     public EventCallback<MouseEventArgs> OnFavoriteClick { get; set; }

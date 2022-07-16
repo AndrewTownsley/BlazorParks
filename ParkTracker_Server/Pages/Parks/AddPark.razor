@@ -1,15 +1,21 @@
 ﻿@page "/addpark"
-@inject IJSRuntime JsRuntime
-@using Business.Repository.IRepository
-@using global::Models
+@page "/addpark/create"
+@page "/addpark/edit/{Id:int}"
 @using Models
+@using global::Models
+@using Business.Repository.IRepository
+@using Microsoft.IdentityModel.Tokens
+@using ParkTracker_Server.Service.IService
 @using ParkTracker_Server.Helper
 @inject IParkRepository ParkRepository
+@inject IParkImageRepository ParkImageRepository
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+@inject IFileUpload FileUpload
 
 <section>
     <div>
-        <EditForm Model="ParkModel" OnValidSubmit="HandleParkSubmitAdmin" class="form-control bg-light px-4 pb-4">
+        <EditForm Model="ParkModel" OnValidSubmit="HandleParkCreateAdmin" class="form-control bg-light px-4 pb-4">
             <DataAnnotationsValidator/>
             <h3 class="text-success bg-light py-3">Add a Park</h3>
             <span class="text-danger mb-5">* Required</span>
@@ -42,8 +48,9 @@
                     class="form-check-input"
                     @bind-Value="@ParkModel.Fee"
                 />
-            </div>
-            <button class="btn btn-success">Submit Park</button>
+            </div> 
+           
+            <button class="btn btn-success">@SaveBtnText</button>
         </EditForm>
     </div>
 
@@ -53,23 +60,144 @@
 
 @code {
 
+    [Parameter]
+    public int? Id { get; set; }
+    private ParkDto ParkModel { get; set; } = new ParkDto();
+    private string Title { get; set; } = "Create";
+    private string SaveBtnText { get; set; } = "Add";
+    private ParkImageDto ParkImage { get; set; } = new ParkImageDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != null)
+        {
+            // Editing Functionality
+            Title = "Edit Room";
+            SaveBtnText = "Update";
+            ParkModel = await ParkRepository.GetPark(Id.Value);
+            //if (ParkModel?.ParkImages != null)
+            //{
+            //    ParkModel.ImageUrls = ParkModel.ParkImages.Select(u => u.ParkImageUrl).ToList();
+            //}
+        }
+        else
+        {
+            // Create Room Functionality
+            ParkModel = new ParkDto();
+        }
+    }
+
+    private async Task HandleParkCreateAdmin()
+    {
+        try
+        {
+            var parkDetailsByName = await ParkRepository.DuplicateParkNameCheck(ParkModel.Name, ParkModel.Id);
+            if (parkDetailsByName != null)
+            {
+                await JsRuntime.ToastrError("Park Name already Exists.");
+                return;
+            }
+
+            if (ParkModel.Id != 0 && Title == "Edit Room")
+            {
+                var updateParkData = await ParkRepository.UpdatePark(ParkModel.Id, ParkModel);
+                //if (ParkModel.ImageUrls != null && ParkModel.ImageUrls.Any())
+                //{
+                //    await AddParkImage(updateParkData);
+                //}
+                await JsRuntime.ToastrSuccess("Park has been successfully updated!");
+            }
+            else
+            {
+    // Create
+                var createdResult = await ParkRepository.CreatePark(ParkModel);
+                //await AddParkImage(createdResult);
+                await JsRuntime.ToastrSuccess("New Room has been created.");
+            }
+        }
+        catch(Exception ex)
+        {
+            // Log Exceptions
+        }
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    //private async Task HandleImageUpload(InputFileChangeEventArgs e)
+    //{
+    //    try
+    //    {
+    //        var images = new List<string>();
+    //        if (e.GetMultipleFiles().Count > 0)
+    //        {
+    //            foreach (var file in e.GetMultipleFiles())
+    //            {
+    //                System.IO.FileInfo fileInfo = new System.IO.FileInfo(file.Name);
+    //                if (fileInfo.Extension.ToLower() == ".jpg" ||
+    //                    fileInfo.Extension.ToLower() == ".jpg" ||
+    //                    fileInfo.Extension.ToLower() == ".jpg")
+    //                {
+    //                    var uploadedImagePath = await FileUpload.UploadFile(file);
+    //                    images.Add(uploadedImagePath);
+    //                }
+    //                else
+    //                {
+    //                    await JsRuntime.ToastrError("Please select .jpg, .jpeg, or .png file type.");
+    //                    return;
+    //                }
+    //            }
+
+    //            if (images.Any())
+    //            {
+    //                if (ParkModel.ImageUrls != null && ParkModel.ImageUrls.Any())
+    //                {
+    //                    ParkModel.ImageUrls.AddRange(images);
+    //                }
+    //                else
+    //                {
+    //                    ParkModel.ImageUrls = new List<string>();
+    //                    ParkModel.ImageUrls.AddRange(images);
+    //                }
+    //            }
+    //            else
+    //            {
+    //                ParkModel.ImageUrls = new List<string>();
+    //                ParkModel.ImageUrls.AddRange(images);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            await JsRuntime.ToastrError("Image Upload Failed!");
+    //            return;
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        await JsRuntime.ToastrError(ex.Message);
+    //    }
+    //}
+
+    //private async Task AddParkImage(ParkDto parkDetails)
+    //    {
+    //        foreach (var imageUrl in ParkModel.ImageUrls)
+    //        {
+    //            ParkImage = new ParkImageDto()
+    //            {
+    //                ParkId = parkDetails.Id,
+    //                ParkImageUrl = imageUrl
+    //            };
+    //            await ParkImageRepository.CreateParkImage(ParkImage);
+    //        }
+    //    }
+
+
     private async Task ToastSuccess()
     {
         await JsRuntime.ToastrSuccess("Success From The ToastSuccess Task");
-    }
-
-    private ParkDto ParkModel { get; set; } = new ParkDto();
-
-    private async Task HandleParkSubmitAdmin()
+    } 
+    private async Task ToastFailure()
     {
-        var parkDetailsByName = await ParkRepository.DuplicateParkNameCheck(ParkModel.Name);
-        if (parkDetailsByName != null)
-        {
-            return;
-        }
-        var createdResult = await ParkRepository.CreatePark(ParkModel);
-        NavigationManager.NavigateTo("/addpark");
-        await ToastSuccess();
+        await JsRuntime.ToastrError("Success From The ToastSuccess Task");
     }
 
 

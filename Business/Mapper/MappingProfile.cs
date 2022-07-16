@@ -11,6 +11,7 @@ namespace Business.Mapper
             CreateMap<ParkDto, Park>();
             CreateMap<Park, Park>();
             CreateMap<Park, ParkDto>();
+            CreateMap<ParkImage, ParkImageDto>().ReverseMap();
         }
     }
 }

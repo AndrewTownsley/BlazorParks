@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialMigrationBugFix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fee = table.Column<bool>(type: "bit", nullable: false),
+                    Fee = table.Column<bool>(type: "bit", nullable: true),
                     FeePrice = table.Column<double>(type: "float", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -31,10 +31,38 @@ namespace DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Parks", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "ParkImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ParkId = table.Column<int>(type: "int", nullable: false),
+                    ParkImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParkImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ParkImages_Parks_ParkId",
+                        column: x => x.ParkId,
+                        principalTable: "Parks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ParkImages_ParkId",
+                table: "ParkImages",
+                column: "ParkId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ParkImages");
+
             migrationBuilder.DropTable(
                 name: "Parks");
         }

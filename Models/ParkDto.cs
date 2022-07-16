@@ -14,6 +14,10 @@ namespace Models
         // Dropdown w/ options
         [Required(ErrorMessage = "Please select a State")]
         public string State { get; set; }
+        public virtual ICollection<ParkImageDto> ParkImages { get; set; }
+
+        public List<string> ImageUrls;
+
 
     }
 }

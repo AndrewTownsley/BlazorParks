@@ -1,12 +1,14 @@
-﻿namespace DataAccess.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DataAccess.Data
 {
     public class Park
     {
+        [Key]
         public int Id { get; set; }
-
+        [Required]
         public string Name { get; set; }
-
-        public bool Fee { get; set; }
+        public bool? Fee { get; set; }
 
         public double? FeePrice { get; set; }
 
@@ -27,5 +29,7 @@
         public string? UpdatedBy { get; set; }
 
         public DateTime? UpdatedDate { get; set; }
+
+        public virtual ICollection<ParkImage> ParkImages { get; set; }
     }
 }

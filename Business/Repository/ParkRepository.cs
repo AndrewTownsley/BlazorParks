@@ -94,7 +94,7 @@ namespace Business.Repository
             }
         }
 
-        public async Task<ParkDto> DuplicateParkNameCheck(string name)
+        public async Task<ParkDto> DuplicateParkNameCheck(string name, int parkId = 0)
         {
             try
             {

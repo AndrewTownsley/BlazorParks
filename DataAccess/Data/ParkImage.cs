@@ -10,7 +10,7 @@ namespace DataAccess.Data
 
         public string ParkImageUrl { get; set; }
 
-        [ForeignKey("RoomId")]
+        [ForeignKey("ParkId")]
         public virtual Park Park { get; set; }
     }
 }

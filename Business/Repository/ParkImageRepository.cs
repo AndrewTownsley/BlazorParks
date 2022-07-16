@@ -19,7 +19,7 @@ namespace Business.Repository
         public async Task<int> CreateParkImage(ParkImageDto imageDto)
         {
             var image = _mapper.Map<ParkImageDto, ParkImage>(imageDto);
-            _db.ParkImages.AddAsync(image);
+            await _db.ParkImages.AddAsync(image);
             return await _db.SaveChangesAsync();
         }
 

@@ -11,15 +11,16 @@
 
 @if (Parks.Any())
 {
+
 @foreach (var park in Parks)
         {
-            <ParkCard park="@park"/>
+          //<ParkCard Park="@park"/>
             
-      @*      <article class="card bg-light col-6 p-4 mb-4">
+            <article class="card bg-light col-6 p-4 mb-4">
                 <div class="d-flex justify-content-between">
                     <h4 class="text-success">
                         <a 
-                            href="/parkdetail"
+                            
                             class="text-success">
                             @park.Name
                         </a>
@@ -29,25 +30,26 @@
                 <h5 class="text-secondary">Location: @park.State</h5>
                 <p>@park.Description</p>
                 <div class="d-flex justify-content-between align-items-end">
-                    <p class="mb-0">Fee: <span style="font-weight: bold; color: #444;">@(park.Fee ? "Yes" : "No")</span></p>
+                    <p class="mb-0">Fee: 
+                        <span style="font-weight: bold; color: #444;">
+                                 @(park.Fee ? "Yes" : "No")
+                        </span></p>
                     <a href="#" class="btn btn-success">View Park</a>
+                    <a href="@($"addpark/edit/{park.Id}")" class="btn btn-secondary">Edit</a>
                 </div>
-            </article>*@
+            </article>
         }
 }
 else
 {
-    <div class="bg-warning">
-        <h3 class="text-success">No Parks Found!</h3>
+    <div clas="bg-light p-4">
+        <h2 class="text-dark">No Parks Found!</h2>
     </div>
 }
 
 
 @code
 {
-
-    [Parameter]
-    public ParkDto Park { get; set; }
 
     private IEnumerable<ParkDto> Parks { get; set; } = new List<ParkDto>();
 

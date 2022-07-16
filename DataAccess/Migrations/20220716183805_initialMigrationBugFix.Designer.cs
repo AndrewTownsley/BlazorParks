@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220712233629_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220716183805_initialMigrationBugFix")]
+    partial class initialMigrationBugFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,7 +44,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Fee")
+                    b.Property<bool?>("Fee")
                         .HasColumnType("bit");
 
                     b.Property<double?>("FeePrice")
@@ -69,6 +69,44 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Parks");
+                });
+
+            modelBuilder.Entity("DataAccess.Data.ParkImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ParkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ParkImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParkId");
+
+                    b.ToTable("ParkImages");
+                });
+
+            modelBuilder.Entity("DataAccess.Data.ParkImage", b =>
+                {
+                    b.HasOne("DataAccess.Data.Park", "Park")
+                        .WithMany("ParkImages")
+                        .HasForeignKey("ParkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Park");
+                });
+
+            modelBuilder.Entity("DataAccess.Data.Park", b =>
+                {
+                    b.Navigation("ParkImages");
                 });
 #pragma warning restore 612, 618
         }

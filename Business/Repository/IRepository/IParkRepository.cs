@@ -14,6 +14,6 @@ namespace Business.Repository.IRepository
 
         public Task<IEnumerable<ParkDto>> GetAllParks();
 
-        public Task<ParkDto> DuplicateParkNameCheck(string name);
+        public Task<ParkDto> DuplicateParkNameCheck(string name, int parkId = 0);
     }
 }

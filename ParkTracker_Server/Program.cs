@@ -2,6 +2,7 @@ using Business.Repository;
 using Business.Repository.IRepository;
 using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
+using ParkTracker_Server.Service;
 
 namespace ParkTracker_Server
 {
@@ -16,6 +17,8 @@ namespace ParkTracker_Server
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddScoped<IParkRepository, ParkRepository>();
+            builder.Services.AddScoped<IParkImageRepository, ParkImageRepository>();
+            builder.Services.AddScoped<Service.IService.IFileUpload, FileUpload>();
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
 

@@ -8,6 +8,6 @@ namespace Models
         [Required]
         public int ParkId { get; set; }
         [Required]
-        public string ParkImageUrl { get; set; }
+        public string? ParkImageUrl { get; set; }
     }
 }

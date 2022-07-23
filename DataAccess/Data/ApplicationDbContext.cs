@@ -9,6 +9,8 @@ namespace DataAccess.Data
 
         public DbSet<Park> Parks { get; set; }
 
+        public DbSet<AdminPark> AdminParks { get; set; }
+
         public DbSet<ParkImage> ParkImages { get; set; }
     }
 }

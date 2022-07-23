@@ -1,6 +1,6 @@
 ﻿namespace ParkTracker_Server.Models
 {
-    public class UserPark
+    public class Park
     {
         public int Id { get; set; }
         public string Name { get; set; }
